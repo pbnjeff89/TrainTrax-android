@@ -10,9 +10,83 @@
     android:orientation="vertical"
     tools:context="com.pbnjeff.wot.TrackActivity">
 
-    <Spinner
-        android:id="@+id/exercise_spinner"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1. "/>
+
+        <!-- Need to convert spinner selection ino text -->
+
+        <Spinner
+            android:id="@+id/exercise_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/repset_list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Text size in EditTexts and TextViews are grossly different -->
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Weight"
+            android:inputType="number"
+            android:background="@android:color/transparent" />
+
+        <!-- Need to link units in settings with units here
+             but for now just keep everything in lbs -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lbs x "
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="reps"
+            android:inputType="number"
+            android:background="@android:color/transparent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\@"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="RPE"
+            android:inputType="number"
+            android:background="@android:color/transparent"
+            android:paddingRight="10dp" />
+
+        <!-- Please add functionality to this button -->
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="+" />
+
+    </LinearLayout>
 
 </LinearLayout>
