@@ -11,81 +11,93 @@
     tools:context="com.pbnjeff.wot.TrackActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1. "/>
+            android:orientation="horizontal">
 
-        <!-- Need to convert spinner selection ino text -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. "/>
 
-        <Spinner
-            android:id="@+id/exercise_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <!-- Need to convert spinner selection ino text -->
 
-    </LinearLayout>
+            <Spinner
+                android:id="@+id/exercise_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <ListView
-        android:id="@+id/repset_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <!-- Text size in EditTexts and TextViews are grossly different -->
-
-        <EditText
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/exercise_sets"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Weight"
-            android:inputType="number"
-            android:background="@android:color/transparent" />
+            android:orientation="vertical" />
 
-        <!-- Need to link units in settings with units here
-             but for now just keep everything in lbs -->
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="lbs x "
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="reps"
-            android:inputType="number"
-            android:background="@android:color/transparent" />
+            <!-- Text size in EditTexts and TextViews are grossly different -->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="\@"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            <EditText
+                android:id="@+id/weight_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Weight"
+                android:inputType="number"
+                android:background="@android:color/transparent" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="RPE"
-            android:inputType="number"
-            android:background="@android:color/transparent"
-            android:paddingRight="10dp" />
+            <!-- Need to link units in settings with units here
+                 but for now just keep everything in lbs -->
 
-        <!-- Please add functionality to this button -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lbs x "
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
 
-        <Button
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:text="+" />
+            <EditText
+                android:id="@+id/reps_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="reps"
+                android:inputType="number"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\@"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+
+            <EditText
+                android:id="@+id/rpe_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="RPE"
+                android:inputType="number"
+                android:background="@android:color/transparent"
+                android:paddingRight="10dp" />
+
+            <!-- Please add functionality to this button -->
+
+            <Button
+                android:id="@+id/add_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="+" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
