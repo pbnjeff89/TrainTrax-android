@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">WOT</string>
+    <string-array name="exercises_array">
+        <item>Squat</item>
+        <item>Bench</item>
+        <item>Deadlift</item>
+        <item>Clean and Jerk</item>
+        <item>Snatch</item>
+    </string-array>
+</resources>
