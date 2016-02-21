@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Exercise Name"
+        android:id="@+id/list_exercise_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Weight"
+        android:id="@+id/list_exercise_weight_header"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Reps"
+        android:id="@+id/list_exercise_reps_header"
+        android:layout_alignTop="@+id/list_exercise_weight_header"
+        android:layout_toRightOf="@+id/list_exercise_weight_header"
+        android:layout_toEndOf="@+id/list_exercise_weight_header"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="RPE"
+        android:id="@+id/list_exercise_RPE_header"
+        android:layout_alignTop="@+id/list_exercise_reps_header"
+        android:layout_toRightOf="@+id/list_exercise_reps_header"
+        android:layout_toEndOf="@+id/list_exercise_reps_header"
+        android:layout_marginLeft="37dp"
+        android:layout_marginStart="37dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="weight"
+        android:id="@+id/exercise_weight_used"
+        android:layout_below="@+id/list_exercise_weight_header"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="17dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="reps"
+        android:id="@+id/list_exercise_reps"
+        android:layout_alignTop="@+id/exercise_weight_used"
+        android:layout_alignLeft="@+id/list_exercise_reps_header"
+        android:layout_alignStart="@+id/list_exercise_reps_header"
+        android:layout_alignRight="@+id/list_exercise_name"
+        android:layout_alignEnd="@+id/list_exercise_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="rpe"
+        android:id="@+id/list_exercise_RPE"
+        android:layout_alignBottom="@+id/exercise_weight_used"
+        android:layout_alignLeft="@+id/list_exercise_RPE_header"
+        android:layout_alignStart="@+id/list_exercise_RPE_header" />
+
+</RelativeLayout>
