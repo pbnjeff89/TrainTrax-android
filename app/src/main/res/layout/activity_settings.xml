@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Timers:"/>
+            android:text="@string/timer"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Units:" />
+            android:text="@string/units" />
 
         <ToggleButton
             android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wilks:"/>
+            android:text="@string/wilks"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sinclair:"/>
+            android:text="@string/sinclair"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Export:"/>
+            android:text="@string/export"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Social Media:" />
+            android:text="@string/soc_media" />
 
         <ToggleButton
             android:layout_width="wrap_content"

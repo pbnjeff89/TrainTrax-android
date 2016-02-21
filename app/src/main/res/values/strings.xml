@@ -1,5 +1,16 @@
 <resources>
-    <string name="app_name">WOT</string>
+    <string name="app_name">TrainTrax</string>
+
+    <string name="main_title">TrainTrax</string>
+    <string name="main_track_workout">Track Workout</string>
+    <string name="main_settings">Settings</string>
+    <string name="timer">Timer:</string>
+    <string name="units">Units:</string>
+    <string name="wilks">Wilks:</string>
+    <string name="sinclair">Sinclair:</string>
+    <string name="export">Export As</string>
+    <string name="soc_media">Social Media Sharing</string>
+
     <string-array name="exercises_array">
         <item>Squat</item>
         <item>Bench</item>

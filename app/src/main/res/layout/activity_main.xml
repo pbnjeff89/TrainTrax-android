@@ -14,32 +14,32 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Workout Tracker"
+        android:text="@string/main_title"
         android:textAllCaps="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Track Workout"
+        android:text="@string/main_track_workout"
         android:textAllCaps="true"
         android:onClick="trackWorkout"/>
-
+<!--
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Workout History"
+        android:text="Workout History (Coming Soon)"
         android:textAllCaps="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Analyze Training"
-        android:textAllCaps="true" />
+        android:text="Analyze Training (Coming Soon)"
+        android:textAllCaps="true" />-->
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings"
+        android:text="@string/main_settings"
         android:textAllCaps="true"
         android:onClick="openSettings" />
 

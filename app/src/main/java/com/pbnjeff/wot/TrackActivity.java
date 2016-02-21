@@ -2,26 +2,19 @@ package com.pbnjeff.wot;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 public class TrackActivity extends AppCompatActivity {
 
-    private LinearLayout newLayout;
+    /*private LinearLayout newLayout;
     private EditText weightText, repText, rpeText;
-    private Button addButton;
+    private Button addButton;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track);
 
-        Spinner spinner = (Spinner) findViewById(R.id.exercise_spinner);
+        /*Spinner spinner = (Spinner) findViewById(R.id.exercise_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.exercises_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -34,8 +27,10 @@ public class TrackActivity extends AppCompatActivity {
         addButton = (Button) findViewById(R.id.add_button);
         addButton.setOnClickListener(onClick());
         TextView textView = new TextView(this);
-        textView.setText("lol");
+        textView.setText("lol");*/
     }
+
+    /**
 
     private View.OnClickListener onClick() {
 
@@ -61,5 +56,7 @@ public class TrackActivity extends AppCompatActivity {
         textView.setText(text);
         return textView;
     }
+
+     **/
 
 }

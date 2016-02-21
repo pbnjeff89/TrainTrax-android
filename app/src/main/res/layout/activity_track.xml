@@ -10,6 +10,11 @@
     android:orientation="vertical"
     tools:context="com.pbnjeff.wot.TrackActivity">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
+    <!--
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="1. "/>
 
-            <!-- Need to convert spinner selection ino text -->
+            &lt;!&ndash; Need to convert spinner selection ino text &ndash;&gt;
 
             <Spinner
                 android:id="@+id/exercise_spinner"
@@ -45,7 +50,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- Text size in EditTexts and TextViews are grossly different -->
+            &lt;!&ndash; Text size in EditTexts and TextViews are grossly different &ndash;&gt;
 
             <EditText
                 android:id="@+id/weight_input"
@@ -55,8 +60,8 @@
                 android:inputType="number"
                 android:background="@android:color/transparent" />
 
-            <!-- Need to link units in settings with units here
-                 but for now just keep everything in lbs -->
+            &lt;!&ndash; Need to link units in settings with units here
+                 but for now just keep everything in lbs &ndash;&gt;
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,7 +94,7 @@
                 android:background="@android:color/transparent"
                 android:paddingRight="10dp" />
 
-            <!-- Please add functionality to this button -->
+            &lt;!&ndash; Please add functionality to this button &ndash;&gt;
 
             <Button
                 android:id="@+id/add_button"
@@ -99,6 +104,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>
