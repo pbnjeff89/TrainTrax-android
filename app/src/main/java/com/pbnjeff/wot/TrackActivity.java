@@ -31,6 +31,9 @@ public class TrackActivity extends AppCompatActivity {
         myExercises.add(new Exercise("Squat", 132.5, 10, 1));
         myExercises.add(new Exercise("Bench", 100, 10, 2));
         myExercises.add(new Exercise("Deadlift", 150, 10, 3));
+        myExercises.add(new Exercise("Snatch", 150, 10, 3));
+        myExercises.add(new Exercise("Clean & Jerk", 150, 10, 3));
+        myExercises.add(new Exercise("Strict Curl", 150, 10, 3));
     }
 
     private void populateListView() {
@@ -56,19 +59,7 @@ public class TrackActivity extends AppCompatActivity {
             Exercise currentExercise = myExercises.get(position);
 
             TextView exerciseName = (TextView) itemView.findViewById(R.id.list_exercise_name);
-            exerciseName.setText(currentExercise.getName());
-
-            TextView weightUsed = (TextView) itemView.findViewById(R.id.exercise_weight_used);
-            String weight = String.valueOf(currentExercise.getWeight());
-            weightUsed.setText(weight);
-
-            TextView repsPerformed = (TextView) itemView.findViewById(R.id.list_exercise_reps);
-            String reps = String.valueOf(currentExercise.getReps());
-            repsPerformed.setText(reps);
-
-            TextView rpe = (TextView) itemView.findViewById(R.id.list_exercise_RPE);
-            String rpeString = String.valueOf(currentExercise.getRPE());
-            rpe.setText(rpeString);
+            exerciseName.setText((position + 1) + ". " + currentExercise.getName());
 
             return itemView;
         }

@@ -18,6 +18,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void editWorkout(View view) {
+        Intent intent = new Intent(this, EditWorkoutActivity.class);
+        startActivity(intent);
+    }
+
     public void openSettings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
