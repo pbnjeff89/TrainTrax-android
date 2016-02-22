@@ -5,6 +5,8 @@ package com.pbnjeff.wot;
  */
 public class Exercise {
     private String name;
+    private ExerciseHistory history;
+    private int index;
     private double weight;
     private int reps;
     private double rpe;
@@ -12,6 +14,7 @@ public class Exercise {
     public Exercise(String name, double weight, int reps, double rpe) {
         super();
         this.name = name;
+        this.history = new ExerciseHistory();
         this.weight = weight;
         this.reps = reps;
         this.rpe = rpe;

@@ -31,25 +31,6 @@ public class TrackActivity extends AppCompatActivity {
         myExercises.add(new Exercise("Squat", 132.5, 10, 1));
         myExercises.add(new Exercise("Bench", 100, 10, 2));
         myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
-        myExercises.add(new Exercise("Deadlift", 150, 10, 3));
     }
 
     private void populateListView() {
