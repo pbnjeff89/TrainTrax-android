@@ -13,6 +13,18 @@
     <ListView
         android:id="@+id/exercise_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/exercise_list_name_edit" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/exercise_list_add_name"
+        android:text="@string/add_exercise" />
 
 </LinearLayout>

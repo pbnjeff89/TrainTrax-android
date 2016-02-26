@@ -10,6 +10,7 @@
     <string name="sinclair">Sinclair:</string>
     <string name="export">Export As</string>
     <string name="soc_media">Social Media Sharing</string>
+    <string name="add_exercise">Add Exercise</string>
 
     <string-array name="exercises_array">
         <item>Squat</item>
@@ -18,4 +19,5 @@
         <item>Clean and Jerk</item>
         <item>Snatch</item>
     </string-array>
+    <string name="title_activity_exercise_history">ExerciseHistoryActivity</string>
 </resources>
