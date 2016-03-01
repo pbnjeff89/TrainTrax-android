@@ -20,15 +20,6 @@ public class Exercise {
         this.rpe = rpe;
     }
 
-    public Exercise (String name, double weightKG, int reps, double rpe) {
-        super();
-        this.name = name;
-        this.weightKG = weightKG;
-        this.weightLBS = weightKG * 2.20462;
-        this.reps = reps;
-        this.rpe = rpe;
-    }
-
     public String getName() {
         return name;
     }

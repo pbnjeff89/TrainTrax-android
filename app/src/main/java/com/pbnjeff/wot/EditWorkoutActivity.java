@@ -81,7 +81,7 @@ public class EditWorkoutActivity extends AppCompatActivity {
             Exercise currentExercise = myExercises.get(position);
 
             TextView exerciseWeight = (TextView) itemView.findViewById(R.id.edit_workout_weight);
-            exerciseWeight.setText(String.valueOf(currentExercise.getWeight()));
+            exerciseWeight.setText(String.valueOf(currentExercise.getWeightLBS()));
 
             TextView exerciseReps = (TextView) itemView.findViewById(R.id.edit_workout_reps);
             exerciseReps.setText(String.valueOf(currentExercise.getReps()));

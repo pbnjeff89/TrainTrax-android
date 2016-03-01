@@ -11,6 +11,8 @@
     <string name="export">Export As</string>
     <string name="soc_media">Social Media Sharing</string>
     <string name="add_exercise">Add Exercise</string>
+    <string name="placeholder">Sample Text</string>
+    <string name="delete">Delete</string>
 
     <string-array name="exercises_array">
         <item>Squat</item>
