@@ -22,36 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/main_track_workout"
-        android:textAllCaps="true"
-        android:onClick="trackWorkout"/>
-
-    <Button
-        android:id="@+id/button_edit_workout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit Workout"
-        android:textAllCaps="true"
-        android:onClick="editWorkout"/>
-<!--
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Workout History (Coming Soon)"
         android:textAllCaps="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Analyze Training (Coming Soon)"
-        android:textAllCaps="true" />-->
-
-    <Button
-        android:id="@+id/button_open_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/main_settings"
-        android:textAllCaps="true"
-        android:onClick="openSettings" />
-
 
 </LinearLayout>

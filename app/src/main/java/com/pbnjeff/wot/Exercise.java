@@ -5,15 +5,26 @@ package com.pbnjeff.wot;
  */
 public class Exercise {
     private String name;
-    private int index;
-    private double weight;
+    private double weightLBS;
+    private double weightKG;
     private int reps;
     private double rpe;
 
-    public Exercise(String name, double weight, int reps, double rpe) {
+
+    public Exercise(String name, double weightLBS, int reps, double rpe) {
         super();
         this.name = name;
-        this.weight = weight;
+        this.weightLBS = weightLBS;
+        this.weightKG = weightLBS / 2.20462;
+        this.reps = reps;
+        this.rpe = rpe;
+    }
+
+    public Exercise (String name, double weightKG, int reps, double rpe) {
+        super();
+        this.name = name;
+        this.weightKG = weightKG;
+        this.weightLBS = weightKG * 2.20462;
         this.reps = reps;
         this.rpe = rpe;
     }
@@ -22,9 +33,11 @@ public class Exercise {
         return name;
     }
 
-    public double getWeight() {
-        return weight;
+    public double getWeightLBS() {
+        return weightLBS;
     }
+
+    public double getWeightKG() { return weightKG; }
 
     public int getReps() {
         return reps;

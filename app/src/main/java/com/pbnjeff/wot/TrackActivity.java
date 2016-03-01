@@ -19,7 +19,7 @@ public class TrackActivity extends AppCompatActivity {
 
     private List<String> myExercises = new ArrayList<String>();
     ArrayAdapter<String> adapter = null;
-    ExerciseListHelper myExerciseListDB;
+    WorkoutHelper myExerciseListDB;
     EditText editName;
     Button buttonAddName;
 
@@ -27,7 +27,7 @@ public class TrackActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track);
-        myExerciseListDB = new ExerciseListHelper(this);
+        myExerciseListDB = new WorkoutHelper(this);
 
         editName = (EditText) findViewById(R.id.exercise_list_name_edit);
 
