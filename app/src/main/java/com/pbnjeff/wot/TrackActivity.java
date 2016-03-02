@@ -1,44 +1,44 @@
 package com.pbnjeff.wot;
 
-import android.database.Cursor;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TrackActivity extends AppCompatActivity {
 
-    private List<String> myExercises = new ArrayList<String>();
-    ArrayAdapter<String> adapter = null;
-    WorkoutHelper myExerciseListDB;
-    EditText editName;
-    Button buttonAddName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track);
-        myExerciseListDB = new WorkoutHelper(this);
+        // myExerciseListDB = new WorkoutHelper(this);
 
-        editName = (EditText) findViewById(R.id.exercise_list_name_edit);
+        ArrayList<String> exerciseList = new ArrayList<String>();
+        exerciseList.add("exercise 1");
+        exerciseList.add("exercise 2");
+        exerciseList.add("exercise 3");
+        // editName = (EditText) findViewById(R.id.exercise_list_name_edit);
 
-        populateExercises();
+        // populateExercises();
 
-        adapter = new MyListAdapter();
+        ExerciseListAdapter adapter = new ExerciseListAdapter(exerciseList, this);
         ListView list = (ListView) findViewById(R.id.exercise_list);
         list.setAdapter(adapter);
     }
 
     private void populateExercises() {
+        /* Code for later
+
         Cursor cursor = myExerciseListDB.getAllData();
 
         if (cursor.getCount() == 0) {
@@ -46,28 +46,68 @@ public class TrackActivity extends AppCompatActivity {
         }
         else {
             while (cursor.moveToNext()) {
-                myExercises.add(cursor.getString(1));
+                exerciseList.add(cursor.getString(1));
             }
-        }
+        }*/
     }
 
-    private class MyListAdapter extends ArrayAdapter<String> {
+    private class ExerciseListAdapter extends BaseAdapter implements ListAdapter {
 
-        public MyListAdapter() {
-            super(TrackActivity.this, R.layout.exercise_view, myExercises);
+        private ArrayList<String> exerciseList = new ArrayList<String>();
+        private Context context;
+
+        public ExerciseListAdapter(ArrayList<String> exerciseList, Context context) {
+            this.exerciseList = exerciseList;
+            this.context = context;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public int getCount() {
+            return exerciseList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return exerciseList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
-            final Cursor cursor = myExerciseListDB.getAllData();
+            // final Cursor cursor = myExerciseListDB.getAllData();
 
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.exercise_view, parent, false);
             }
 
-            buttonAddName = (Button) findViewById(R.id.exercise_list_add_name);
-            buttonAddName.setOnClickListener(
+            Button buttonAdd = (Button) findViewById(R.id.exercise_list_add_name);
+            Button buttonDelete = (Button) itemView.findViewById(R.id.exercise_delete);
+            final EditText exerciseEdit = (EditText) findViewById(R.id.exercise_list_name_edit);
+
+            // causes crashes...
+            buttonDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    exerciseList.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
+
+            buttonAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    exerciseList.add(exerciseEdit.getText().toString());
+                    exerciseEdit.setText("");
+                    notifyDataSetChanged();
+                }
+            });
+
+            /*buttonAdd.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -76,17 +116,26 @@ public class TrackActivity extends AppCompatActivity {
                                 Toast.makeText(TrackActivity.this,
                                         "Exercise added", Toast.LENGTH_LONG).show();
                                 cursor.moveToLast();
-                                myExercises.add(cursor.getString(1));
+                                exerciseList.add(cursor.getString(1));
                                 adapter.notifyDataSetChanged();
                             } else
                                 Toast.makeText(TrackActivity.this,
                                         "Exercise not added", Toast.LENGTH_LONG).show();
                         }
                     }
-            );
+            );*/
 
+
+           /* buttonDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    exerciseList.remove(position);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+*/
             TextView exerciseName = (TextView) itemView.findViewById(R.id.list_exercise_name);
-            exerciseName.setText(myExercises.get(position));
+            exerciseName.setText(exerciseList.get(position));
 
             return itemView;
         }
