@@ -27,6 +27,28 @@ public class Exercise {
 
     public float getRpe(int pos) { return this.rpe.get(pos); }
 
+    public int getSets() { return this.reps.size(); }
 
+    public int addSet(float weight, String units, int reps, float rpe) {
+        if(units == "lbs") {
+            this.weightLbs.add(weight);
+            this.reps.add(reps);
+            this.rpe.add(rpe);
+            return 1;
+        }
+        else if (units == "kg") {
+            this.weightLbs.add(weight / 2.20462f);
+            this.reps.add(reps);
+            this.rpe.add(rpe);
+            return 1;
+        }
+        else return -1;
+    }
+
+    public void removeSet(int position) {
+        this.weightLbs.remove(position);
+        this.reps.remove(position);
+        this.rpe.remove(position);
+    }
 
 }

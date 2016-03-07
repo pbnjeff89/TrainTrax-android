@@ -1,37 +1,106 @@
 package com.pbnjeff.wot;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class TrackActivity extends AppCompatActivity {
 
+    ExpandableListAdapter expandableListAdapter;
+    ExpandableListView expandableListView;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+    ArrayList<Exercise> exerciseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track);
 
-        ArrayList<Exercise> exerciseList = new ArrayList<Exercise>();
+        exerciseList = new ArrayList<Exercise>();
         // IT DOESN'T WORK UNLESS THERE IS SOMETHING ALREADY HERE, WHAT??
-        exerciseList.add(new Exercise(""));
 
-        ExerciseListAdapter adapter = new ExerciseListAdapter(exerciseList, this);
+        prepareExerciseData();
+
+        /*ExerciseListAdapter adapter = new ExerciseListAdapter(exerciseList, this);
         ListView list = (ListView) findViewById(R.id.exercise_list);
-        list.setAdapter(adapter);
+        list.setAdapter(adapter);*/
+
+        expandableListView = (ExpandableListView) findViewById(R.id.exercise_list);
+        prepareListData();
+        expandableListAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+        expandableListView.setAdapter(expandableListAdapter);
     }
 
-    private class ExerciseListAdapter extends BaseAdapter implements ListAdapter {
+    private void prepareExerciseData() {
+        exerciseList.add(new Exercise("Squat"));
+        exerciseList.add(new Exercise("Bench Press"));
+        exerciseList.add(new Exercise("Deadlift"));
+        populateData(0);
+        populateData(1);
+        populateData(2);
+
+    }
+
+    private void populateData(int i) {
+        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
+    }
+
+    private void prepareListData() {
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+
+        //headers
+        listDataHeader.add(exerciseList.get(0).getName());
+        listDataHeader.add(exerciseList.get(1).getName());
+        listDataHeader.add(exerciseList.get(2).getName());
+
+        //children data
+        List<String> childSquat = new ArrayList<String>();
+        childSquat.add("1");
+        childSquat.add("2");
+        childSquat.add("3");
+
+        List<String> childBench = new ArrayList<String>();
+        childBench.add("1");
+        childBench.add("2");
+        childBench.add("3");
+
+        List<String> childDead = new ArrayList<String>();
+        childDead.add("1");
+        childDead.add("2");
+        childDead.add("3");
+
+        listDataChild.put(listDataHeader.get(0), childSquat);
+        listDataChild.put(listDataHeader.get(1), childBench);
+        listDataChild.put(listDataHeader.get(2), childDead);
+
+        /*for(int i = 0; i < exerciseList.size(); i++) {
+            child = new ArrayList<String>();
+            for(int j = 0; j < exerciseList.get(i).getSets(); j++) {
+                child.add(String.valueOf(exerciseList.get(i).getWeightLbs(j)) +
+                            " lbs x " + String.valueOf(exerciseList.get(i).getReps(j)) +
+                            " @ " + String.valueOf(exerciseList.get(i).getRpe(j)));
+            }
+            listDataChild.put(listDataHeader.get(i), child);
+        }*/
+
+    }
+
+    /*private class ExerciseListAdapter extends BaseAdapter implements ListAdapter {
 
         private ArrayList<Exercise> exerciseList = new ArrayList<Exercise>();
         private Context context;
@@ -91,5 +160,5 @@ public class TrackActivity extends AppCompatActivity {
             return itemView;
         }
 
-    }
+    }*/
 }

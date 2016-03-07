@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <TextView
+    <!--<TextView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="48dp"
@@ -32,11 +32,17 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="48dp"
-        android:id="@+id/row_rpe" />
+        android:id="@+id/row_rpe" />-->
 
-    <Button
+    <TextView
         android:layout_width="0dp"
         android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_text"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:id="@+id/row_delete"
         android:text="@string/delete" />
