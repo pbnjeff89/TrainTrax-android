@@ -21,42 +21,22 @@ public class TrackActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track);
-        // myExerciseListDB = new WorkoutHelper(this);
 
-        ArrayList<String> exerciseList = new ArrayList<String>();
-        exerciseList.add("exercise 1");
-        exerciseList.add("exercise 2");
-        exerciseList.add("exercise 3");
-        // editName = (EditText) findViewById(R.id.exercise_list_name_edit);
-
-        // populateExercises();
+        ArrayList<Exercise> exerciseList = new ArrayList<Exercise>();
+        // IT DOESN'T WORK UNLESS THERE IS SOMETHING ALREADY HERE, WHAT??
+        exerciseList.add(new Exercise(""));
 
         ExerciseListAdapter adapter = new ExerciseListAdapter(exerciseList, this);
         ListView list = (ListView) findViewById(R.id.exercise_list);
         list.setAdapter(adapter);
     }
 
-    private void populateExercises() {
-        /* Code for later
-
-        Cursor cursor = myExerciseListDB.getAllData();
-
-        if (cursor.getCount() == 0) {
-            return;
-        }
-        else {
-            while (cursor.moveToNext()) {
-                exerciseList.add(cursor.getString(1));
-            }
-        }*/
-    }
-
     private class ExerciseListAdapter extends BaseAdapter implements ListAdapter {
 
-        private ArrayList<String> exerciseList = new ArrayList<String>();
+        private ArrayList<Exercise> exerciseList = new ArrayList<Exercise>();
         private Context context;
 
-        public ExerciseListAdapter(ArrayList<String> exerciseList, Context context) {
+        public ExerciseListAdapter(ArrayList<Exercise> exerciseList, Context context) {
             this.exerciseList = exerciseList;
             this.context = context;
         }
@@ -79,7 +59,6 @@ public class TrackActivity extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
-            // final Cursor cursor = myExerciseListDB.getAllData();
 
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.exercise_view, parent, false);
@@ -89,7 +68,6 @@ public class TrackActivity extends AppCompatActivity {
             Button buttonDelete = (Button) itemView.findViewById(R.id.exercise_delete);
             final EditText exerciseEdit = (EditText) findViewById(R.id.exercise_list_name_edit);
 
-            // causes crashes...
             buttonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,41 +79,14 @@ public class TrackActivity extends AppCompatActivity {
             buttonAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    exerciseList.add(exerciseEdit.getText().toString());
+                    exerciseList.add(new Exercise(exerciseEdit.getText().toString()));
                     exerciseEdit.setText("");
                     notifyDataSetChanged();
                 }
             });
 
-            /*buttonAdd.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            boolean isInserted = myExerciseListDB.insertData(editName.getText().toString());
-                            if (isInserted == true) {
-                                Toast.makeText(TrackActivity.this,
-                                        "Exercise added", Toast.LENGTH_LONG).show();
-                                cursor.moveToLast();
-                                exerciseList.add(cursor.getString(1));
-                                adapter.notifyDataSetChanged();
-                            } else
-                                Toast.makeText(TrackActivity.this,
-                                        "Exercise not added", Toast.LENGTH_LONG).show();
-                        }
-                    }
-            );*/
-
-
-           /* buttonDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    exerciseList.remove(position);
-                    adapter.notifyDataSetChanged();
-                }
-            });
-*/
             TextView exerciseName = (TextView) itemView.findViewById(R.id.list_exercise_name);
-            exerciseName.setText(exerciseList.get(position));
+            exerciseName.setText(exerciseList.get(position).getName());
 
             return itemView;
         }

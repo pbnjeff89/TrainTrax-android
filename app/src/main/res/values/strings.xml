@@ -22,4 +22,12 @@
         <item>Snatch</item>
     </string-array>
     <string name="title_activity_exercise_history">ExerciseHistoryActivity</string>
+    <string name="addset">Add Set</string>
+    <string name="set">Set</string>
+    <string name="weight">Weight</string>
+    <string name="weight_units">Units</string>
+    <string name="reps">Reps</string>
+    <string name="rpe">RPE</string>
+    <string name="time">Time</string>
+    <string name="distance">Distance</string>
 </resources>
