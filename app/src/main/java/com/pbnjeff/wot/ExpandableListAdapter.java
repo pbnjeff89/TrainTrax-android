@@ -11,9 +11,6 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by Jeff on 3/7/2016.
- */
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
@@ -52,7 +49,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.row_text);
+                .findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText);
         return convertView;
@@ -89,10 +86,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.exercise_view, null);
         }
 
-        TextView exerciseName = (TextView) convertView
-                .findViewById(R.id.list_exercise_name);
-        exerciseName.setTypeface(null, Typeface.BOLD);
-        exerciseName.setText(headerTitle);
+        TextView lblListHeader = (TextView) convertView
+                .findViewById(R.id.lblListHeader);
+        lblListHeader.setTypeface(null, Typeface.BOLD);
+        lblListHeader.setText(headerTitle);
 
         return convertView;
     }

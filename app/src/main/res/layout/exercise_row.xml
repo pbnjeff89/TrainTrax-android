@@ -4,47 +4,20 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <!--<TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:id="@+id/row_set" />
-
     <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:id="@+id/row_weight" />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:id="@+id/row_units" />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:id="@+id/row_reps" />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:id="@+id/row_rpe" />-->
-
-    <TextView
+        android:id="@+id/lblListItem"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:id="@+id/row_text"
+        android:textSize="17dip"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="48dp"
-        android:id="@+id/row_delete"
+        android:id="@+id/btn_deleterow"
         android:text="@string/delete" />
 
 </LinearLayout>

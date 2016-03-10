@@ -10,10 +10,11 @@ import java.util.List;
 
 public class TrackActivity extends AppCompatActivity {
 
-    ExpandableListAdapter expandableListAdapter;
-    ExpandableListView expandableListView;
+    ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
+
     ArrayList<Exercise> exerciseList;
 
     @Override
@@ -21,144 +22,76 @@ public class TrackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track);
 
+        // get the listview
+        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+
+        // preparing list data
         exerciseList = new ArrayList<Exercise>();
-        // IT DOESN'T WORK UNLESS THERE IS SOMETHING ALREADY HERE, WHAT??
-
-        prepareExerciseData();
-
-        /*ExerciseListAdapter adapter = new ExerciseListAdapter(exerciseList, this);
-        ListView list = (ListView) findViewById(R.id.exercise_list);
-        list.setAdapter(adapter);*/
-
-        expandableListView = (ExpandableListView) findViewById(R.id.exercise_list);
         prepareListData();
-        expandableListAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
-        expandableListView.setAdapter(expandableListAdapter);
+
+        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+
+        // setting list adapter
+        expListView.setAdapter(listAdapter);
     }
 
-    private void prepareExerciseData() {
-        exerciseList.add(new Exercise("Squat"));
-        exerciseList.add(new Exercise("Bench Press"));
-        exerciseList.add(new Exercise("Deadlift"));
-        populateData(0);
-        populateData(1);
-        populateData(2);
-
-    }
-
-    private void populateData(int i) {
-        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(i).addSet(123.4f, "lbs", 3, 8.0f);
-    }
-
+    /*
+     * Preparing the list data
+     */
     private void prepareListData() {
+
+        exerciseList.add(new Exercise("Squat"));
+        exerciseList.add(new Exercise("Bench"));
+        exerciseList.add(new Exercise("Deadlift"));
+
+        exerciseList.get(0).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(0).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(0).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(0).addSet(123.4f, "lbs", 3, 8.0f);
+
+        exerciseList.get(1).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(1).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(1).addSet(123.4f, "lbs", 3, 8.0f);
+
+        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
+        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
+
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
-        //headers
+        // Adding child data
         listDataHeader.add(exerciseList.get(0).getName());
         listDataHeader.add(exerciseList.get(1).getName());
         listDataHeader.add(exerciseList.get(2).getName());
 
-        //children data
-        List<String> childSquat = new ArrayList<String>();
-        childSquat.add("1");
-        childSquat.add("2");
-        childSquat.add("3");
+        // Adding child data
+        List<String> squat = new ArrayList<String>();
+        for(int i = 0; i < exerciseList.get(0).getSets(); i++) {
+            squat.add(String.valueOf(exerciseList.get(0).getWeightLbs(i)) + " lbs x " +
+                        String.valueOf(exerciseList.get(0).getReps(i)) + " @ " +
+                        String.valueOf(exerciseList.get(0).getRpe(i)));
+        }
 
-        List<String> childBench = new ArrayList<String>();
-        childBench.add("1");
-        childBench.add("2");
-        childBench.add("3");
+        List<String> bench = new ArrayList<String>();
+        for(int i = 0; i < exerciseList.get(1).getSets(); i++) {
+            bench.add(String.valueOf(exerciseList.get(1).getWeightLbs(i)) + " lbs x " +
+                    String.valueOf(exerciseList.get(1).getReps(i)) + " @ " +
+                    String.valueOf(exerciseList.get(1).getRpe(i)));
+        }
 
-        List<String> childDead = new ArrayList<String>();
-        childDead.add("1");
-        childDead.add("2");
-        childDead.add("3");
+        List<String> deadlift = new ArrayList<String>();
+        for(int i = 0; i < exerciseList.get(2).getSets(); i++) {
+            deadlift.add(String.valueOf(exerciseList.get(2).getWeightLbs(i)) + " lbs x " +
+                    String.valueOf(exerciseList.get(2).getReps(i)) + " @ " +
+                    String.valueOf(exerciseList.get(2).getRpe(i)));
+        }
 
-        listDataChild.put(listDataHeader.get(0), childSquat);
-        listDataChild.put(listDataHeader.get(1), childBench);
-        listDataChild.put(listDataHeader.get(2), childDead);
-
-        /*for(int i = 0; i < exerciseList.size(); i++) {
-            child = new ArrayList<String>();
-            for(int j = 0; j < exerciseList.get(i).getSets(); j++) {
-                child.add(String.valueOf(exerciseList.get(i).getWeightLbs(j)) +
-                            " lbs x " + String.valueOf(exerciseList.get(i).getReps(j)) +
-                            " @ " + String.valueOf(exerciseList.get(i).getRpe(j)));
-            }
-            listDataChild.put(listDataHeader.get(i), child);
-        }*/
-
+        listDataChild.put(listDataHeader.get(0), squat); // Header, Child data
+        listDataChild.put(listDataHeader.get(1), bench);
+        listDataChild.put(listDataHeader.get(2), deadlift);
     }
-
-    /*private class ExerciseListAdapter extends BaseAdapter implements ListAdapter {
-
-        private ArrayList<Exercise> exerciseList = new ArrayList<Exercise>();
-        private Context context;
-
-        public ExerciseListAdapter(ArrayList<Exercise> exerciseList, Context context) {
-            this.exerciseList = exerciseList;
-            this.context = context;
-        }
-
-        @Override
-        public int getCount() {
-            return exerciseList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return exerciseList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            View itemView = convertView;
-
-            if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.exercise_view, parent, false);
-            }
-
-            Button buttonAdd = (Button) findViewById(R.id.exercise_list_add_name);
-            Button buttonDelete = (Button) itemView.findViewById(R.id.exercise_delete);
-            final EditText exerciseEdit = (EditText) findViewById(R.id.exercise_list_name_edit);
-
-            buttonDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    exerciseList.remove(position);
-                    notifyDataSetChanged();
-                }
-            });
-
-            buttonAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    exerciseList.add(new Exercise(exerciseEdit.getText().toString()));
-                    exerciseEdit.setText("");
-                    notifyDataSetChanged();
-                }
-            });
-
-            TextView exerciseName = (TextView) itemView.findViewById(R.id.list_exercise_name);
-            exerciseName.setText(exerciseList.get(position).getName());
-
-            return itemView;
-        }
-
-    }*/
 }

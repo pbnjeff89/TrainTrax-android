@@ -12,7 +12,7 @@
     <string name="soc_media">Social Media Sharing</string>
     <string name="add_exercise">Add Exercise</string>
     <string name="placeholder">Sample Text</string>
-    <string name="delete">Delete</string>
+    <string name="delete">X</string>
 
     <string-array name="exercises_array">
         <item>Squat</item>
@@ -22,7 +22,7 @@
         <item>Snatch</item>
     </string-array>
     <string name="title_activity_exercise_history">ExerciseHistoryActivity</string>
-    <string name="addset">Add Set</string>
+    <string name="addset">+Set</string>
     <string name="set">Set</string>
     <string name="weight">Weight</string>
     <string name="weight_units">Units</string>
@@ -30,4 +30,5 @@
     <string name="rpe">RPE</string>
     <string name="time">Time</string>
     <string name="distance">Distance</string>
+    <string name="delete_exercise">Remove</string>
 </resources>
