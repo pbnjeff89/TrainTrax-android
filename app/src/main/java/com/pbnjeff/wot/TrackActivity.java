@@ -6,7 +6,6 @@ import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -61,11 +60,13 @@ public class TrackActivity extends AppCompatActivity {
             }
         });
 
+        // register listview for context meu
+        registerForContextMenu(expListView);
+
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
-        // register listview for context meu
-        registerForContextMenu(expListView);
+
     }
 
     @Override
@@ -92,17 +93,49 @@ public class TrackActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        ExpandableListView.ExpandableListContextMenuInfo info =
+                (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
+
+        int childPosition = expListView.getPackedPositionChild(info.packedPosition);
+        int groupPosition = expListView.getPackedPositionGroup(info.packedPosition);
+
         switch (item.getItemId()) {
             case R.id.add_set:
-                return true;
+                addSet(groupPosition);
+                break;
             case R.id.delete_exercise:
-                return true;
+                /*Toast toast = new Toast(this);
+                toast.makeText(this, "deleted" + String.valueOf(groupPosition),
+                        Toast.LENGTH_LONG).show();*/
+                deleteExercise(groupPosition);
+                break;
             case R.id.exercise_cancel:
-                return true;
-            default:
-                return super.onContextItemSelected(item);
+                break;
+            case R.id.edit_set:
+                break;
         }
+        return super.onContextItemSelected(item);
+    }
+
+    private void deleteExercise(int groupPosition) {
+        listDataChild.remove(listDataHeader.get(groupPosition));
+        listDataHeader.remove(groupPosition);
+        exerciseList.remove(groupPosition);
+        listAdapter.notifyDataSetChanged();
+    }
+
+    private void addSet(int groupPosition) {
+        exerciseList.get(groupPosition).addSet(123.4f, "lbs", 1, 8.8f);
+        List<String> newSet = new ArrayList<String>();
+
+        for(int i = 0; i < exerciseList.get(groupPosition).getSets(); i++) {
+            newSet.add(String.valueOf(exerciseList.get(groupPosition).getWeightLbs(i)) + " lbs x " +
+                    String.valueOf(exerciseList.get(groupPosition).getReps(i)) + " @ " +
+                    String.valueOf(exerciseList.get(groupPosition).getRpe(i)));
+        }
+
+        listDataChild.put(exerciseList.get(groupPosition).getName(), newSet);
+        listAdapter.notifyDataSetChanged();
     }
 
     /*
