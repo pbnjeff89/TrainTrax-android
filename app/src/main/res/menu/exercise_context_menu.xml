@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/add_set"
+        android:title="@string/addset" />
+    <item android:id="@+id/delete_exercise"
+        android:title="@string/delete_exercise" />
+    <item android:id="@+id/exercise_cancel"
+        android:title="@string/cancel" />
+</menu>

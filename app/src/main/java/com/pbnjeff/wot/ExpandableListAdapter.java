@@ -52,6 +52,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText);
+
+        // set child to be long clickable
+        convertView.setLongClickable(true);
+
         return convertView;
     }
 
