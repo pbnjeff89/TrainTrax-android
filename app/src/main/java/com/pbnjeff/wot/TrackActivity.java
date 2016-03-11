@@ -2,6 +2,9 @@ package com.pbnjeff.wot;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
@@ -30,6 +33,20 @@ public class TrackActivity extends AppCompatActivity {
         prepareListData();
 
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+
+
+
+        Button addExercise = (Button) findViewById(R.id.exercise_list_add_name);
+        final EditText newExercise = (EditText) findViewById(R.id.exercise_list_name_edit);
+
+        addExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exerciseList.add(new Exercise(newExercise.getText().toString()));
+                listDataHeader.add(exerciseList.get(exerciseList.size()-1).getName());
+                listAdapter.notifyDataSetChanged();
+            }
+        });
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
