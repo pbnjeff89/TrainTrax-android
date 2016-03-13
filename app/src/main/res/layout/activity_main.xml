@@ -24,4 +24,11 @@
         android:text="@string/main_track_workout"
         android:textAllCaps="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_edit_workout"
+        android:text="Edit Workout"
+        android:textAllCaps="true" />
+
 </LinearLayout>

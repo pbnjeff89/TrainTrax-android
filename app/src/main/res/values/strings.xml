@@ -24,7 +24,11 @@
     <string name="time">Time</string>
     <string name="distance">Distance</string>
     <string name="delete_exercise">Remove Exercise</string>
+    <string name="confirm">OK</string>
     <string name="cancel">Cancel</string>
     <string name="edit_set">Edit Set</string>
     <string name="delete_set">Delete Set</string>
+    <string name="setdialog_weight">Weight</string>
+    <string name="setdialog_reps">Reps</string>
+    <string name="setdialog_rpe">RPE</string>
 </resources>
