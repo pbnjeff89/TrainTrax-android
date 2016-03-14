@@ -1,8 +1,11 @@
 package com.pbnjeff.wot;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,18 +49,15 @@ public class TrackActivity extends AppCompatActivity {
 
         // exercise adder button
         Button addExercise = (Button) findViewById(R.id.exercise_list_add_name);
-        final EditText newExercise = (EditText) findViewById(R.id.exercise_list_name_edit);
+        // final EditText newExercise = (EditText) findViewById(R.id.exercise_list_name_edit);
 
         addExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                exerciseList.add(new Exercise(newExercise.getText().toString()));
-                listDataHeader.add(exerciseList.get(exerciseList.size() - 1).getName());
-                List<String> emptyList = new ArrayList<String>();
-                emptyList.add("empty");
-                listDataChild.put(exerciseList.get(exerciseList.size() - 1).getName(), emptyList);
-                listAdapter.notifyDataSetChanged();
+                addExerciseInputDialog();
             }
+
+
         });
 
         // register listview for context meu
@@ -67,6 +67,36 @@ public class TrackActivity extends AppCompatActivity {
         expListView.setAdapter(listAdapter);
 
 
+    }
+
+    protected void addExerciseInputDialog() {
+
+        LayoutInflater inflater = LayoutInflater.from(TrackActivity.this);
+        View promptView = inflater.inflate(R.layout.add_exercise_layout, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TrackActivity.this);
+        alertDialogBuilder.setView(promptView);
+
+        final EditText addExercise = (EditText) promptView.findViewById(R.id.add_exercise_input);
+
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        exerciseList.add(new Exercise(addExercise.getText().toString()));
+                        listDataHeader.add(exerciseList.get(exerciseList.size() - 1).getName());
+                        List<String> emptyList = new ArrayList<String>();
+                        emptyList.add("empty");
+                        listDataChild.put(exerciseList.get(exerciseList.size() - 1).getName(), emptyList);
+                        listAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 
     @Override
@@ -104,17 +134,26 @@ public class TrackActivity extends AppCompatActivity {
                 addSet(groupPosition);
                 break;
             case R.id.delete_exercise:
-                /*Toast toast = new Toast(this);
-                toast.makeText(this, "deleted" + String.valueOf(groupPosition),
-                        Toast.LENGTH_LONG).show();*/
                 deleteExercise(groupPosition);
                 break;
             case R.id.exercise_cancel:
+                break;
+            case R.id.delete_set:
+                deleteSet(groupPosition, childPosition);
                 break;
             case R.id.edit_set:
                 break;
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void deleteSet(int groupPosition, int childPosition) {
+        List<String> originalSets = listDataChild.get(listDataHeader.get(groupPosition));
+        List<String> newSets = originalSets;
+        String removed = newSets.remove(childPosition);
+        listDataChild.put(listDataHeader.get(groupPosition), newSets);
+        exerciseList.get(groupPosition).deleteSet(childPosition);
+        listAdapter.notifyDataSetChanged();
     }
 
     private void deleteExercise(int groupPosition) {

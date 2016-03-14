@@ -45,6 +45,13 @@ public class Exercise {
         else return -1;
     }
 
+    public int deleteSet(int position) {
+        this.weightLbs.remove(position);
+        this.reps.remove(position);
+        this.rpe.remove(rpe);
+        return 1;
+    }
+
     public void removeSet(int position) {
         this.weightLbs.remove(position);
         this.reps.remove(position);
