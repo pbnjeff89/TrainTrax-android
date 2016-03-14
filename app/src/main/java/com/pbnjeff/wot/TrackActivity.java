@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -39,12 +41,6 @@ public class TrackActivity extends AppCompatActivity {
         exerciseList = new ArrayList<Exercise>();
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
-        //prepareListData();
-
-        // BIG ISSUE: if you try to open up an exercise without a set in it
-        // it wilL CRASH THE FUCK OUT OF THE APP
-
-        // for now, when you add, please add
 
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
@@ -142,9 +138,14 @@ public class TrackActivity extends AppCompatActivity {
                 deleteSet(groupPosition, childPosition);
                 break;
             case R.id.edit_set:
+                editSet(groupPosition, childPosition);
                 break;
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void editSet(int groupPosition, int childPosition) {
+
     }
 
     private void deleteSet(int groupPosition, int childPosition) {
@@ -163,20 +164,6 @@ public class TrackActivity extends AppCompatActivity {
         listAdapter.notifyDataSetChanged();
     }
 
-    private void addSet(int groupPosition) {
-        exerciseList.get(groupPosition).addSet(123.4f, "lbs", 1, 8.8f);
-        List<String> newSet = new ArrayList<String>();
-
-        for(int i = 0; i < exerciseList.get(groupPosition).getSets(); i++) {
-            newSet.add(String.valueOf(exerciseList.get(groupPosition).getWeightLbs(i)) + " lbs x " +
-                    String.valueOf(exerciseList.get(groupPosition).getReps(i)) + " @ " +
-                    String.valueOf(exerciseList.get(groupPosition).getRpe(i)));
-        }
-
-        listDataChild.put(exerciseList.get(groupPosition).getName(), newSet);
-        listAdapter.notifyDataSetChanged();
-    }
-
     protected void addSetInputDialog(final int groupPosition, final int childPosition) {
         LayoutInflater inflater = LayoutInflater.from(TrackActivity.this);
         View promptView = inflater.inflate(R.layout.add_set_layout, null);
@@ -186,6 +173,13 @@ public class TrackActivity extends AppCompatActivity {
         final EditText weight = (EditText) promptView.findViewById(R.id.setdialog_weight_edit);
         final EditText reps = (EditText) promptView.findViewById(R.id.setdialog_reps_edit);
         final EditText rpe = (EditText) promptView.findViewById(R.id.setdialog_rpe_edit);
+
+        // create spinner for units
+        final Spinner spinner = (Spinner) promptView.findViewById(R.id.units_spinner);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.units_array, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
 
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -197,6 +191,7 @@ public class TrackActivity extends AppCompatActivity {
                         Boolean whitespaceRpe = rpe.getText().toString().trim().length() == 0;
                         Boolean invalidInput = whitespaceWeight ||
                                 whitespaceReps || whitespaceRpe;
+                        String units = spinner.getSelectedItem().toString();
 
                         if (invalidInput) {
                             Toast.makeText(TrackActivity.this, "Please input valid values.",
@@ -206,10 +201,10 @@ public class TrackActivity extends AppCompatActivity {
                             // update exerciseList
                             exerciseList.get(groupPosition)
                                     .addSet(Float.valueOf(weight.getText().toString()),
-                                            "lbs", Integer.valueOf(reps.getText().toString()),
+                                            units, Integer.valueOf(reps.getText().toString()),
                                             Float.valueOf(rpe.getText().toString()));
 
-                            String addString = weight.getText().toString() + " lbs x " +
+                            String addString = weight.getText().toString() + " " + units + " x " +
                                     reps.getText().toString() + " @ " + rpe.getText().toString();
 
                             // update listDataHeader
@@ -231,60 +226,4 @@ public class TrackActivity extends AppCompatActivity {
         alert.show();
     }
 
-    /*
-     * Preparing the list data
-     */
-    private void prepareListData() {
-
-        exerciseList.add(new Exercise("Squat"));
-        exerciseList.add(new Exercise("Bench"));
-        exerciseList.add(new Exercise("Deadlift"));
-
-        exerciseList.get(0).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(0).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(0).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(0).addSet(123.4f, "lbs", 3, 8.0f);
-
-        exerciseList.get(1).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(1).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(1).addSet(123.4f, "lbs", 3, 8.0f);
-
-        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
-        exerciseList.get(2).addSet(123.4f, "lbs", 3, 8.0f);
-
-        // Adding child data
-        listDataHeader.add(exerciseList.get(0).getName());
-        listDataHeader.add(exerciseList.get(1).getName());
-        listDataHeader.add(exerciseList.get(2).getName());
-
-        // Adding child data
-        List<String> squat = new ArrayList<String>();
-        for(int i = 0; i < exerciseList.get(0).getSets(); i++) {
-            squat.add(String.valueOf(exerciseList.get(0).getWeightLbs(i)) + " lbs x " +
-                        String.valueOf(exerciseList.get(0).getReps(i)) + " @ " +
-                        String.valueOf(exerciseList.get(0).getRpe(i)));
-        }
-
-        List<String> bench = new ArrayList<String>();
-        for(int i = 0; i < exerciseList.get(1).getSets(); i++) {
-            bench.add(String.valueOf(exerciseList.get(1).getWeightLbs(i)) + " lbs x " +
-                    String.valueOf(exerciseList.get(1).getReps(i)) + " @ " +
-                    String.valueOf(exerciseList.get(1).getRpe(i)));
-        }
-
-        List<String> deadlift = new ArrayList<String>();
-        for(int i = 0; i < exerciseList.get(2).getSets(); i++) {
-            deadlift.add(String.valueOf(exerciseList.get(2).getWeightLbs(i)) + " lbs x " +
-                    String.valueOf(exerciseList.get(2).getReps(i)) + " @ " +
-                    String.valueOf(exerciseList.get(2).getRpe(i)));
-        }
-
-        listDataChild.put(listDataHeader.get(0), squat); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), bench);
-        listDataChild.put(listDataHeader.get(2), deadlift);
-    }
 }

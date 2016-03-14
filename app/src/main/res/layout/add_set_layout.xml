@@ -36,10 +36,10 @@
             android:id="@+id/setdialog_reps_edit"
             android:inputType="numberDecimal"/>
 
-        <!--<Spinner
+        <Spinner
             android:id="@+id/units_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />-->
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

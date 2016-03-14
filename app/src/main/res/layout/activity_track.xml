@@ -22,4 +22,10 @@
         android:id="@+id/exercise_list_add_name"
         android:text="@string/add_exercise" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_save_workout"
+        android:text="@string/save_workout" />
+
 </LinearLayout>

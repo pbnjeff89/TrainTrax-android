@@ -31,6 +31,7 @@
     <string name="setdialog_weight">Weight</string>
     <string name="setdialog_reps">Reps</string>
     <string name="setdialog_rpe">RPE</string>
+    <string name="save_workout">Save Workout</string>
 
     <string-array name="units_array">
         <item>lbs</item>
