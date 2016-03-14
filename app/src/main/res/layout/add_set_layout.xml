@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/setdialog_weight"
+        android:text="@string/setdialog_weight" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/setdialog_weight"
+        android:id="@+id/setdialog_weight_edit"
+        android:inputType="numberDecimal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/setdialog_reps"
+        android:layout_below="@id/setdialog_weight"
+        android:text="@string/setdialog_reps" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/setdialog_reps"
+            android:id="@+id/setdialog_reps_edit"
+            android:inputType="numberDecimal"/>
+
+        <!--<Spinner
+            android:id="@+id/units_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />-->
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/setdialog_rpe"
+        android:layout_below="@id/setdialog_reps"
+        android:text="@string/setdialog_rpe" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/setdialog_reps"
+        android:id="@+id/setdialog_rpe_edit"
+        android:inputType="numberDecimal"/>
+
+</LinearLayout>

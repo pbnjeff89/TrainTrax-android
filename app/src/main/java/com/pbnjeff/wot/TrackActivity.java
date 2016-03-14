@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -131,7 +132,7 @@ public class TrackActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.add_set:
-                addSet(groupPosition);
+                addSetInputDialog(groupPosition, childPosition);
                 break;
             case R.id.delete_exercise:
                 deleteExercise(groupPosition);
@@ -175,6 +176,60 @@ public class TrackActivity extends AppCompatActivity {
 
         listDataChild.put(exerciseList.get(groupPosition).getName(), newSet);
         listAdapter.notifyDataSetChanged();
+    }
+
+    protected void addSetInputDialog(final int groupPosition, final int childPosition) {
+        LayoutInflater inflater = LayoutInflater.from(TrackActivity.this);
+        View promptView = inflater.inflate(R.layout.add_set_layout, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TrackActivity.this);
+        alertDialogBuilder.setView(promptView);
+
+        final EditText weight = (EditText) promptView.findViewById(R.id.setdialog_weight_edit);
+        final EditText reps = (EditText) promptView.findViewById(R.id.setdialog_reps_edit);
+        final EditText rpe = (EditText) promptView.findViewById(R.id.setdialog_rpe_edit);
+
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        Boolean whitespaceWeight = weight.getText().toString().trim().length() == 0;
+                        Boolean whitespaceReps = reps.getText().toString().trim().length() == 0;
+                        Boolean whitespaceRpe = rpe.getText().toString().trim().length() == 0;
+                        Boolean invalidInput = whitespaceWeight ||
+                                whitespaceReps || whitespaceRpe;
+
+                        if (invalidInput) {
+                            Toast.makeText(TrackActivity.this, "Please input valid values.",
+                                    Toast.LENGTH_LONG).show();
+                            dialog.cancel();
+                        } else {
+                            // update exerciseList
+                            exerciseList.get(groupPosition)
+                                    .addSet(Float.valueOf(weight.getText().toString()),
+                                            "lbs", Integer.valueOf(reps.getText().toString()),
+                                            Float.valueOf(rpe.getText().toString()));
+
+                            String addString = weight.getText().toString() + " lbs x " +
+                                    reps.getText().toString() + " @ " + rpe.getText().toString();
+
+                            // update listDataHeader
+                            List<String> newSets =
+                                    listDataChild.get(listDataHeader.get(groupPosition));
+                            newSets.add(addString);
+                            Toast.makeText(TrackActivity.this, addString, Toast.LENGTH_SHORT).show();
+                            listAdapter.notifyDataSetChanged();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 
     /*
