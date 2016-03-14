@@ -39,7 +39,7 @@ public class TrackActivity extends AppCompatActivity {
         exerciseList = new ArrayList<Exercise>();
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
-        prepareListData();
+        //prepareListData();
 
         // BIG ISSUE: if you try to open up an exercise without a set in it
         // it wilL CRASH THE FUCK OUT OF THE APP
@@ -85,7 +85,6 @@ public class TrackActivity extends AppCompatActivity {
                         exerciseList.add(new Exercise(addExercise.getText().toString()));
                         listDataHeader.add(exerciseList.get(exerciseList.size() - 1).getName());
                         List<String> emptyList = new ArrayList<String>();
-                        emptyList.add("empty");
                         listDataChild.put(exerciseList.get(exerciseList.size() - 1).getName(), emptyList);
                         listAdapter.notifyDataSetChanged();
                     }
