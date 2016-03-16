@@ -23,6 +23,8 @@ public class Exercise {
 
     public float getWeightLbs(int pos) { return this.weightLbs.get(pos); }
 
+    public float getWeightKg(int pos) { return this.weightLbs.get(pos) / 2.20462f; }
+
     public int getReps(int pos) { return this.reps.get(pos); }
 
     public float getRpe(int pos) { return this.rpe.get(pos); }

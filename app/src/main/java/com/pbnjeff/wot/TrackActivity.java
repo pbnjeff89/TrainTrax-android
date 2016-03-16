@@ -26,6 +26,8 @@ public class TrackActivity extends AppCompatActivity {
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
+    String unitsToDisplay;
+    Spinner unitsDisplay;
 
     ArrayList<Exercise> exerciseList;
 
@@ -63,6 +65,25 @@ public class TrackActivity extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
+        /* TODO FIX THIS FUCKING SHIT. IT STILL DOESN'T CONVERT EVERYTHING
+
+        unitsDisplay = (Spinner) findViewById(R.id.track_spinner_units);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.units_array, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        unitsDisplay.setAdapter(spinnerAdapter);
+
+        unitsDisplay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                convertUnits();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });*/
 
     }
 
@@ -78,11 +99,25 @@ public class TrackActivity extends AppCompatActivity {
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        exerciseList.add(new Exercise(addExercise.getText().toString()));
-                        listDataHeader.add(exerciseList.get(exerciseList.size() - 1).getName());
-                        List<String> emptyList = new ArrayList<String>();
-                        listDataChild.put(exerciseList.get(exerciseList.size() - 1).getName(), emptyList);
-                        listAdapter.notifyDataSetChanged();
+                        Boolean isUnique = true;
+
+                        String addExerciseString = addExercise.getText().toString();
+
+                        for (int i = 0; i < exerciseList.size(); i++) {
+                            if (addExerciseString == exerciseList.get(i).getName())
+                                isUnique = false;
+                        }
+                        if (isUnique) {
+                            exerciseList.add(new Exercise(addExercise.getText().toString()));
+                            listDataHeader.add(exerciseList.get(exerciseList.size() - 1).getName());
+                            List<String> emptyList = new ArrayList<String>();
+                            listDataChild.put(exerciseList.get(exerciseList.size() - 1).getName(), emptyList);
+                            listAdapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(TrackActivity.this, "Please give a unique name.",
+                                    Toast.LENGTH_LONG);
+                            dialog.cancel();
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -175,6 +210,9 @@ public class TrackActivity extends AppCompatActivity {
         final EditText rpe = (EditText) promptView.findViewById(R.id.setdialog_rpe_edit);
 
         // create spinner for units
+        // TODO:
+        // Implement a method to modify all the sets when you select kg or lbs
+
         final Spinner spinner = (Spinner) promptView.findViewById(R.id.units_spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.units_array, android.R.layout.simple_spinner_item);
@@ -226,4 +264,32 @@ public class TrackActivity extends AppCompatActivity {
         alert.show();
     }
 
+    /* TODO like note above, FIX THIS FUCKING SHIT...but let's do it later
+
+    private void convertUnits() {
+        // find out what units were selected
+        String unitsConvertTo = unitsDisplay.getSelectedItem().toString();
+
+        //create listDataChild from exerciseLists, but use the right units
+        // EVERYTHING GETS FUCKED WHEN YOU CHANGE UNTIS LOL
+        for (int i = 0; i < exerciseList.size(); i++) {
+            List<String> convertedList = new ArrayList<String>();
+            for(int j = 0; j < exerciseList.get(i).getSets(); j++) {
+                String reps = String.valueOf(exerciseList.get(i).getReps(j));
+                String rpe = String.valueOf(exerciseList.get(i).getRpe(j));
+                String weight;
+                if(unitsConvertTo.equals("lbs")) {
+                    weight = String.valueOf(exerciseList.get(i).getWeightLbs(j));
+                }
+                else {
+                    weight = String.valueOf(exerciseList.get(i).getWeightLbs(j));
+                }
+                convertedList.add(weight + " " + unitsConvertTo + " x " + reps + " @ " + rpe);
+            }
+            listDataChild.put(listDataHeader.get(i), convertedList);
+        }
+
+        // notifyDataSetChanged
+        listAdapter.notifyDataSetChanged();
+    }*/
 }
