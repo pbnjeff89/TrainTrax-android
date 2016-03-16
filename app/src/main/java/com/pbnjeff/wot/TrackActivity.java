@@ -236,13 +236,21 @@ public class TrackActivity extends AppCompatActivity {
                                     Toast.LENGTH_LONG).show();
                             dialog.cancel();
                         } else {
+                            String weightString = weight.getText().toString();
+                            if(units.equals("kg")) {
+                                // for now, i'm converting everything into lbs
+                                weightString = String.valueOf(Float.valueOf(weightString) *
+                                        2.20462f);
+                            }
                             // update exerciseList
                             exerciseList.get(groupPosition)
                                     .addSet(Float.valueOf(weight.getText().toString()),
                                             units, Integer.valueOf(reps.getText().toString()),
                                             Float.valueOf(rpe.getText().toString()));
 
-                            String addString = weight.getText().toString() + " " + units + " x " +
+                            // TODO fix the decimal places in here so that you only have 1
+                            //      place
+                            String addString = weightString + " lbs x " +
                                     reps.getText().toString() + " @ " + rpe.getText().toString();
 
                             // update listDataHeader
