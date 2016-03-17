@@ -7,6 +7,9 @@
         android:id="@+id/delete_set"
         android:title="@string/delete_set" />
     <item
+        android:id="@+id/convert_units"
+        android:title="@string/convert_units" />
+    <item
         android:id="@+id/contextmenu_set_cancel"
         android:title="@string/cancel" />
 </menu>

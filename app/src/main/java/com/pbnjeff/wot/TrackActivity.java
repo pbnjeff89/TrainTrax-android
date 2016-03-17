@@ -62,10 +62,7 @@ public class TrackActivity extends AppCompatActivity {
         // register listview for context meu
         registerForContextMenu(expListView);
 
-        // setting list adapter
-        expListView.setAdapter(listAdapter);
 
-        /* TODO FIX THIS FUCKING SHIT. IT STILL DOESN'T CONVERT EVERYTHING
 
         unitsDisplay = (Spinner) findViewById(R.id.track_spinner_units);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
@@ -73,7 +70,7 @@ public class TrackActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         unitsDisplay.setAdapter(spinnerAdapter);
 
-        unitsDisplay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*unitsDisplay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 convertUnits();
@@ -85,6 +82,8 @@ public class TrackActivity extends AppCompatActivity {
             }
         });*/
 
+        // setting list adapter
+        expListView.setAdapter(listAdapter);
     }
 
     protected void addExerciseInputDialog() {
@@ -103,21 +102,11 @@ public class TrackActivity extends AppCompatActivity {
 
                         String addExerciseString = addExercise.getText().toString();
 
-                        for (int i = 0; i < exerciseList.size(); i++) {
-                            if (addExerciseString == exerciseList.get(i).getName())
-                                isUnique = false;
-                        }
-                        if (isUnique) {
-                            exerciseList.add(new Exercise(addExercise.getText().toString()));
-                            listDataHeader.add(exerciseList.get(exerciseList.size() - 1).getName());
-                            List<String> emptyList = new ArrayList<String>();
-                            listDataChild.put(exerciseList.get(exerciseList.size() - 1).getName(), emptyList);
-                            listAdapter.notifyDataSetChanged();
-                        } else {
-                            Toast.makeText(TrackActivity.this, "Please give a unique name.",
-                                    Toast.LENGTH_LONG);
-                            dialog.cancel();
-                        }
+                        //exerciseList.add(new Exercise(addExercise.getText().toString()));
+                        listDataHeader.add(addExerciseString);
+                        List<String> emptyList = new ArrayList<String>();
+                        listDataChild.put(addExerciseString, emptyList);
+                        listAdapter.notifyDataSetChanged();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -175,27 +164,28 @@ public class TrackActivity extends AppCompatActivity {
             case R.id.edit_set:
                 editSet(groupPosition, childPosition);
                 break;
+            case R.id.convert_units:
+                convertUnits(groupPosition, childPosition);
+                break;
         }
         return super.onContextItemSelected(item);
     }
 
     private void editSet(int groupPosition, int childPosition) {
-
+        // TODO create an editSet option
     }
 
     private void deleteSet(int groupPosition, int childPosition) {
         List<String> originalSets = listDataChild.get(listDataHeader.get(groupPosition));
-        List<String> newSets = originalSets;
-        String removed = newSets.remove(childPosition);
-        listDataChild.put(listDataHeader.get(groupPosition), newSets);
-        exerciseList.get(groupPosition).deleteSet(childPosition);
+        originalSets.remove(childPosition);
+        //exerciseList.get(groupPosition).deleteSet(childPosition);
         listAdapter.notifyDataSetChanged();
     }
 
     private void deleteExercise(int groupPosition) {
         listDataChild.remove(listDataHeader.get(groupPosition));
         listDataHeader.remove(groupPosition);
-        exerciseList.remove(groupPosition);
+        //exerciseList.remove(groupPosition);
         listAdapter.notifyDataSetChanged();
     }
 
@@ -209,10 +199,7 @@ public class TrackActivity extends AppCompatActivity {
         final EditText reps = (EditText) promptView.findViewById(R.id.setdialog_reps_edit);
         final EditText rpe = (EditText) promptView.findViewById(R.id.setdialog_rpe_edit);
 
-        // create spinner for units
-        // TODO:
-        // Implement a method to modify all the sets when you select kg or lbs
-
+        // spinner for units
         final Spinner spinner = (Spinner) promptView.findViewById(R.id.units_spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.units_array, android.R.layout.simple_spinner_item);
@@ -243,13 +230,14 @@ public class TrackActivity extends AppCompatActivity {
                                         2.20462f);
                             }
                             // update exerciseList
-                            exerciseList.get(groupPosition)
+                            /*exerciseList.get(groupPosition)
                                     .addSet(Float.valueOf(weight.getText().toString()),
                                             units, Integer.valueOf(reps.getText().toString()),
-                                            Float.valueOf(rpe.getText().toString()));
+                                            Float.valueOf(rpe.getText().toString()));*/
 
                             // TODO fix the decimal places in here so that you only have 1
                             //      place
+
                             String addString = weightString + " lbs x " +
                                     reps.getText().toString() + " @ " + rpe.getText().toString();
 
@@ -257,7 +245,6 @@ public class TrackActivity extends AppCompatActivity {
                             List<String> newSets =
                                     listDataChild.get(listDataHeader.get(groupPosition));
                             newSets.add(addString);
-                            Toast.makeText(TrackActivity.this, addString, Toast.LENGTH_SHORT).show();
                             listAdapter.notifyDataSetChanged();
                         }
                     }
@@ -272,32 +259,29 @@ public class TrackActivity extends AppCompatActivity {
         alert.show();
     }
 
-    /* TODO like note above, FIX THIS FUCKING SHIT...but let's do it later
-
-    private void convertUnits() {
+    private void convertUnits(int groupPosition, int childPosition) {
         // find out what units were selected
         String unitsConvertTo = unitsDisplay.getSelectedItem().toString();
 
-        //create listDataChild from exerciseLists, but use the right units
-        // EVERYTHING GETS FUCKED WHEN YOU CHANGE UNTIS LOL
-        for (int i = 0; i < exerciseList.size(); i++) {
-            List<String> convertedList = new ArrayList<String>();
-            for(int j = 0; j < exerciseList.get(i).getSets(); j++) {
-                String reps = String.valueOf(exerciseList.get(i).getReps(j));
-                String rpe = String.valueOf(exerciseList.get(i).getRpe(j));
-                String weight;
-                if(unitsConvertTo.equals("lbs")) {
-                    weight = String.valueOf(exerciseList.get(i).getWeightLbs(j));
-                }
-                else {
-                    weight = String.valueOf(exerciseList.get(i).getWeightLbs(j));
-                }
-                convertedList.add(weight + " " + unitsConvertTo + " x " + reps + " @ " + rpe);
-            }
-            listDataChild.put(listDataHeader.get(i), convertedList);
-        }
+        // String weight;
+        /*String reps = String.valueOf(exerciseList.get(groupPosition).getReps(childPosition));
+        String rpe = String.valueOf(exerciseList.get(groupPosition).getRpe(childPosition));*/
+
+        /*if(unitsConvertTo.equals("lbs"))
+            weight = String.valueOf(editExercise.getWeightLbs(childPosition)) + " lbs x ";
+        else
+            weight = String.valueOf(editExercise.getWeightKg(childPosition)) + " kg x ";
+
+        String addString = weight + reps + " @ " + rpe;*/
+
+        String addString = "suck a dik";
+
+        List<String> sets =
+                listDataChild.get(listDataHeader.get(groupPosition));
+        sets.remove(childPosition);
+        sets.add(childPosition, addString);
 
         // notifyDataSetChanged
         listAdapter.notifyDataSetChanged();
-    }*/
+    }
 }

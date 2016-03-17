@@ -50,7 +50,7 @@ public class Exercise {
     public int deleteSet(int position) {
         this.weightLbs.remove(position);
         this.reps.remove(position);
-        this.rpe.remove(rpe);
+        this.rpe.remove(position);
         return 1;
     }
 
