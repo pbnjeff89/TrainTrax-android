@@ -32,13 +32,13 @@ public class Exercise {
     public int getSets() { return this.reps.size(); }
 
     public int addSet(float weight, String units, int reps, float rpe) {
-        if(units == "lbs") {
+        if(units.equals("lbs")) {
             this.weightLbs.add(weight);
             this.reps.add(reps);
             this.rpe.add(rpe);
             return 1;
         }
-        else if (units == "kg") {
+        else if (units.equals("kg")) {
             this.weightLbs.add(weight / 2.20462f);
             this.reps.add(reps);
             this.rpe.add(rpe);

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +30,7 @@ public class TrackActivity extends AppCompatActivity {
     String unitsToDisplay;
     Spinner unitsDisplay;
 
-    ArrayList<Exercise> exerciseList;
+    List<Exercise> exerciseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class TrackActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         unitsDisplay.setAdapter(spinnerAdapter);
 
-        /*unitsDisplay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        unitsDisplay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 convertUnits();
@@ -80,7 +81,7 @@ public class TrackActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });*/
+        });
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
@@ -102,7 +103,7 @@ public class TrackActivity extends AppCompatActivity {
 
                         String addExerciseString = addExercise.getText().toString();
 
-                        //exerciseList.add(new Exercise(addExercise.getText().toString()));
+                        exerciseList.add(new Exercise(addExercise.getText().toString()));
                         listDataHeader.add(addExerciseString);
                         List<String> emptyList = new ArrayList<String>();
                         listDataChild.put(addExerciseString, emptyList);
@@ -165,7 +166,6 @@ public class TrackActivity extends AppCompatActivity {
                 editSet(groupPosition, childPosition);
                 break;
             case R.id.convert_units:
-                convertUnits(groupPosition, childPosition);
                 break;
         }
         return super.onContextItemSelected(item);
@@ -224,16 +224,17 @@ public class TrackActivity extends AppCompatActivity {
                             dialog.cancel();
                         } else {
                             String weightString = weight.getText().toString();
-                            if(units.equals("kg")) {
+                            if (units.equals("kg")) {
                                 // for now, i'm converting everything into lbs
                                 weightString = String.valueOf(Float.valueOf(weightString) *
                                         2.20462f);
                             }
                             // update exerciseList
-                            /*exerciseList.get(groupPosition)
+                            exerciseList.get(groupPosition)
                                     .addSet(Float.valueOf(weight.getText().toString()),
                                             units, Integer.valueOf(reps.getText().toString()),
-                                            Float.valueOf(rpe.getText().toString()));*/
+                                            Float.valueOf(rpe.getText().toString()));
+                            Toast.makeText(TrackActivity.this, String.valueOf(exerciseList.get(groupPosition).getSets()), Toast.LENGTH_LONG).show();
 
                             // TODO fix the decimal places in here so that you only have 1
                             //      place
@@ -259,27 +260,33 @@ public class TrackActivity extends AppCompatActivity {
         alert.show();
     }
 
-    private void convertUnits(int groupPosition, int childPosition) {
+    private void convertUnits() {
         // find out what units were selected
         String unitsConvertTo = unitsDisplay.getSelectedItem().toString();
 
-        // String weight;
-        /*String reps = String.valueOf(exerciseList.get(groupPosition).getReps(childPosition));
-        String rpe = String.valueOf(exerciseList.get(groupPosition).getRpe(childPosition));*/
+        for(int i = 0; i < exerciseList.size(); i++)
+        {
+            // String weight;
+            Exercise editExercise = exerciseList.get(i);
+            List<String> sets =
+                    listDataChild.get(listDataHeader.get(i));
+            for(int j = 0; j < exerciseList.get(i).getSets(); j++) {
+                String reps = String.valueOf(editExercise.getReps(j));
+                String rpe = String.valueOf(editExercise.getRpe(j));
+                String weight;
 
-        /*if(unitsConvertTo.equals("lbs"))
-            weight = String.valueOf(editExercise.getWeightLbs(childPosition)) + " lbs x ";
-        else
-            weight = String.valueOf(editExercise.getWeightKg(childPosition)) + " kg x ";
+                if (unitsConvertTo.equals("lbs"))
+                    weight = String.valueOf(editExercise.getWeightLbs(j)) + " lbs x ";
+                else
+                    weight = String.valueOf(editExercise.getWeightKg(j)) + " kg x ";
 
-        String addString = weight + reps + " @ " + rpe;*/
+                String addString = weight + reps + " @ " + rpe;
 
-        String addString = "suck a dik";
 
-        List<String> sets =
-                listDataChild.get(listDataHeader.get(groupPosition));
-        sets.remove(childPosition);
-        sets.add(childPosition, addString);
+                sets.remove(j);
+                sets.add(j, addString);
+            }
+        }
 
         // notifyDataSetChanged
         listAdapter.notifyDataSetChanged();
