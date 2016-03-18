@@ -27,7 +27,6 @@ public class TrackActivity extends AppCompatActivity {
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
-    String unitsToDisplay;
     Spinner unitsDisplay;
 
     List<Exercise> exerciseList;
@@ -41,9 +40,9 @@ public class TrackActivity extends AppCompatActivity {
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
 
         // preparing list data
-        exerciseList = new ArrayList<Exercise>();
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        exerciseList = new ArrayList<>();
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
 
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
@@ -99,14 +98,12 @@ public class TrackActivity extends AppCompatActivity {
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Boolean isUnique = true;
 
                         String addExerciseString = addExercise.getText().toString();
 
                         exerciseList.add(new Exercise(addExercise.getText().toString()));
                         listDataHeader.add(addExerciseString);
-                        List<String> emptyList = new ArrayList<String>();
-                        listDataChild.put(addExerciseString, emptyList);
+                        listDataChild.put(addExerciseString, new ArrayList<String>());
                         listAdapter.notifyDataSetChanged();
                     }
                 })
@@ -147,12 +144,12 @@ public class TrackActivity extends AppCompatActivity {
         ExpandableListView.ExpandableListContextMenuInfo info =
                 (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
 
-        int childPosition = expListView.getPackedPositionChild(info.packedPosition);
-        int groupPosition = expListView.getPackedPositionGroup(info.packedPosition);
+        int childPosition = ExpandableListView.getPackedPositionChild(info.packedPosition);
+        int groupPosition = ExpandableListView.getPackedPositionGroup(info.packedPosition);
 
         switch (item.getItemId()) {
             case R.id.add_set:
-                addSetInputDialog(groupPosition, childPosition);
+                addSetInputDialog(groupPosition);
                 break;
             case R.id.delete_exercise:
                 deleteExercise(groupPosition);
@@ -165,31 +162,125 @@ public class TrackActivity extends AppCompatActivity {
             case R.id.edit_set:
                 editSet(groupPosition, childPosition);
                 break;
-            case R.id.convert_units:
-                break;
         }
         return super.onContextItemSelected(item);
     }
 
-    private void editSet(int groupPosition, int childPosition) {
-        // TODO create an editSet option
+    private void editSet(final int groupPosition, final int childPosition) {
+        // set up units to display
+        final String units = unitsDisplay.getSelectedItem().toString();
+
+        // inflate a add_set_layout into dialog
+        LayoutInflater inflater = LayoutInflater.from(TrackActivity.this);
+        View promptView = inflater.inflate(R.layout.add_set_layout, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TrackActivity.this);
+        alertDialogBuilder.setView(promptView);
+
+        // set edit texts to the numbers used in a set
+        final EditText weight = (EditText) promptView.findViewById(R.id.setdialog_weight_edit);
+        final EditText reps = (EditText) promptView.findViewById(R.id.setdialog_reps_edit);
+        final EditText rpe = (EditText) promptView.findViewById(R.id.setdialog_rpe_edit);
+
+        // set up spinner
+        final Spinner spinner = (Spinner) promptView.findViewById(R.id.units_spinner);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.units_array, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+
+        // need to sync up expandable list units with match
+        if(units.equals("lbs")) {
+            weight.setText(String.valueOf(exerciseList.
+                    get(groupPosition).getWeightLbs(childPosition)));
+            spinner.setSelection(0);
+        }
+        else {
+            weight.setText(String.valueOf(exerciseList.
+                    get(groupPosition).getWeightKg(childPosition)));
+            spinner.setSelection(1);
+        }
+
+        reps.setText(String.valueOf(exerciseList.
+                get(groupPosition).getReps(childPosition)));
+        rpe.setText(String.valueOf(exerciseList.
+                get(groupPosition).getRpe(childPosition)));
+
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        Boolean whitespaceWeight = weight.getText().toString().trim().length() == 0;
+                        Boolean whitespaceReps = reps.getText().toString().trim().length() == 0;
+                        Boolean whitespaceRpe = rpe.getText().toString().trim().length() == 0;
+                        Boolean invalidInput = whitespaceWeight ||
+                                whitespaceReps || whitespaceRpe;
+
+                        String unitsDialog = spinner.getSelectedItem().toString();
+
+                        if (invalidInput) {
+                            Toast.makeText(TrackActivity.this, "Please input valid values.",
+                                    Toast.LENGTH_LONG).show();
+                            dialog.cancel();
+                        } else {
+                            String weightString = weight.getText().toString();
+                            if (unitsDialog.equals("kg")) {
+                                weightString = String.valueOf(Float.valueOf(weightString) *
+                                        2.20462f);
+                            }
+                            // update exerciseList
+                            exerciseList.get(groupPosition)
+                                    .replaceSet(childPosition,
+                                            Float.valueOf(weightString),
+                                            unitsDialog, Integer.valueOf(reps.getText().toString()),
+                                            Float.valueOf(rpe.getText().toString()));
+
+                            // TODO fix the decimal places in here so that you only have 1
+                            //      place
+
+                            String addWeightString;
+                            if(units.equals("lbs")) addWeightString =
+                                                    String.valueOf(exerciseList.get(groupPosition)
+                                                                .getWeightLbs(childPosition));
+                            else addWeightString =
+                                    String.valueOf(exerciseList.get(groupPosition)
+                                            .getWeightKg(childPosition));
+
+                            String addString = addWeightString + " lbs x " +
+                                    reps.getText().toString() + " @ " + rpe.getText().toString();
+
+                            // update listDataHeader
+                            List<String> newSets =
+                                    listDataChild.get(listDataHeader.get(groupPosition));
+                            newSets.add(addString);
+                            listAdapter.notifyDataSetChanged();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 
     private void deleteSet(int groupPosition, int childPosition) {
         List<String> originalSets = listDataChild.get(listDataHeader.get(groupPosition));
         originalSets.remove(childPosition);
-        //exerciseList.get(groupPosition).deleteSet(childPosition);
+        exerciseList.get(groupPosition).deleteSet(childPosition);
         listAdapter.notifyDataSetChanged();
     }
 
     private void deleteExercise(int groupPosition) {
         listDataChild.remove(listDataHeader.get(groupPosition));
         listDataHeader.remove(groupPosition);
-        //exerciseList.remove(groupPosition);
+        exerciseList.remove(groupPosition);
         listAdapter.notifyDataSetChanged();
     }
 
-    protected void addSetInputDialog(final int groupPosition, final int childPosition) {
+    protected void addSetInputDialog(final int groupPosition) {
         LayoutInflater inflater = LayoutInflater.from(TrackActivity.this);
         View promptView = inflater.inflate(R.layout.add_set_layout, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TrackActivity.this);
@@ -234,7 +325,6 @@ public class TrackActivity extends AppCompatActivity {
                                     .addSet(Float.valueOf(weight.getText().toString()),
                                             units, Integer.valueOf(reps.getText().toString()),
                                             Float.valueOf(rpe.getText().toString()));
-                            Toast.makeText(TrackActivity.this, String.valueOf(exerciseList.get(groupPosition).getSets()), Toast.LENGTH_LONG).show();
 
                             // TODO fix the decimal places in here so that you only have 1
                             //      place

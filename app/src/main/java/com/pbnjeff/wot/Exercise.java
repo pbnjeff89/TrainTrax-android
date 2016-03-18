@@ -54,10 +54,11 @@ public class Exercise {
         return 1;
     }
 
-    public void removeSet(int position) {
-        this.weightLbs.remove(position);
-        this.reps.remove(position);
-        this.rpe.remove(position);
+    public void replaceSet(int position, float weight, String units, int reps, float rpe) {
+        if(units.equals("lbs")) this.weightLbs.set(position, weight);
+        else this.weightLbs.set(position, weight * 2.20462f);
+        this.reps.set(position, reps);
+        this.rpe.set(position, rpe);
     }
 
 }
