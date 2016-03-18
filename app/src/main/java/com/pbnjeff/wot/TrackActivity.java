@@ -17,6 +17,7 @@ import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -234,16 +235,15 @@ public class TrackActivity extends AppCompatActivity {
                                             unitsDialog, Integer.valueOf(reps.getText().toString()),
                                             Float.valueOf(rpe.getText().toString()));
 
-                            // TODO fix the decimal places in here so that you only have 1
-                            //      place
+                            DecimalFormat df = new DecimalFormat("0.#");
 
                             String addWeightString;
                             if(units.equals("lbs")) addWeightString =
-                                                    String.valueOf(exerciseList.get(groupPosition)
-                                                                .getWeightLbs(childPosition));
+                                                    String.valueOf(df.format(exerciseList.get(groupPosition)
+                                                                .getWeightLbs(childPosition)));
                             else addWeightString =
-                                    String.valueOf(exerciseList.get(groupPosition)
-                                            .getWeightKg(childPosition));
+                                    String.valueOf(df.format(exerciseList.get(groupPosition)
+                                            .getWeightKg(childPosition)));
 
                             String addString = addWeightString + " lbs x " +
                                     reps.getText().toString() + " @ " + rpe.getText().toString();
@@ -314,22 +314,28 @@ public class TrackActivity extends AppCompatActivity {
                                     Toast.LENGTH_LONG).show();
                             dialog.cancel();
                         } else {
-                            String weightString = weight.getText().toString();
-                            if (units.equals("kg")) {
-                                // for now, i'm converting everything into lbs
-                                weightString = String.valueOf(Float.valueOf(weightString) *
-                                        2.20462f);
-                            }
                             // update exerciseList
                             exerciseList.get(groupPosition)
                                     .addSet(Float.valueOf(weight.getText().toString()),
                                             units, Integer.valueOf(reps.getText().toString()),
                                             Float.valueOf(rpe.getText().toString()));
 
-                            // TODO fix the decimal places in here so that you only have 1
-                            //      place
+                            DecimalFormat df = new DecimalFormat("0.#");
+                            String weightString;
 
-                            String addString = weightString + " lbs x " +
+                            int justAddedPos = exerciseList.get(groupPosition)
+                                                .getSets() - 1;
+
+                            if(units.equals("lbs"))
+                                weightString = String.valueOf(df.format(exerciseList.get(groupPosition)
+                                                .getWeightLbs(justAddedPos)));
+                            else
+                                weightString = String.valueOf(df.format(exerciseList.get(groupPosition)
+                                        .getWeightKg(justAddedPos)));
+
+                            String unitsToDisplay = unitsDisplay.getSelectedItem().toString();
+
+                            String addString = weightString + " " + unitsToDisplay + " x " +
                                     reps.getText().toString() + " @ " + rpe.getText().toString();
 
                             // update listDataHeader
@@ -365,10 +371,13 @@ public class TrackActivity extends AppCompatActivity {
                 String rpe = String.valueOf(editExercise.getRpe(j));
                 String weight;
 
+                DecimalFormat df = new DecimalFormat("0.#");
+                String weightString;
+
                 if (unitsConvertTo.equals("lbs"))
-                    weight = String.valueOf(editExercise.getWeightLbs(j)) + " lbs x ";
+                    weight = String.valueOf(df.format(editExercise.getWeightLbs(j))) + " lbs x ";
                 else
-                    weight = String.valueOf(editExercise.getWeightKg(j)) + " kg x ";
+                    weight = String.valueOf(df.format(editExercise.getWeightKg(j))) + " kg x ";
 
                 String addString = weight + reps + " @ " + rpe;
 
