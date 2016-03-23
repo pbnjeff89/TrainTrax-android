@@ -33,9 +33,64 @@
     <string name="setdialog_rpe">RPE</string>
     <string name="save_workout">Save Workout</string>
     <string name="convert_units">Convert Units</string>
+    <string name="search_hint">Search exercises</string>
 
     <string-array name="units_array">
         <item>lbs</item>
         <item>kg</item>
     </string-array>
+
+    <string-array name="barbell_exercises">
+        <item>High Bar Squat</item>
+        <item>Low Bar Squat</item>
+        <item>Front Squat</item>
+        <item>Paused High Bar Squat</item>
+        <item>Paused Low Bar Squat</item>
+        <item>Paused Front Squat</item>
+        <item>Bench Press</item>
+        <item>Paused Bench Press</item>
+        <item>Close Grip Bench Press</item>
+        <item>Spoto Press</item>
+        <item>Conventional Deadlift</item>
+        <item>Sumo Deadlift</item>
+        <item>Stiff-Legged Deadlift</item>
+        <item>Snatch</item>
+        <item>Hang Snatch</item>
+        <item>Power Snatch</item>
+        <item>Clean</item>
+        <item>Jerk</item>
+        <item>Power Clean</item>
+        <item>Power Jerk</item>
+        <item>Overhead Press</item>
+        <item>Push Press</item>
+        <item>Incline Bench Press</item>
+        <item>Decline Bench Press</item>
+        <item>Pendlay Row</item>
+        <item>Row</item>
+    </string-array>
+
+    <string-array name="dumbbell_exercises">
+        <item>Dumbbell Bench Press</item>
+        <item>Dumbbell Incline Bench Press</item>
+        <item>Dumbbell Overhead Press</item>
+        <item>Arnold Press</item>
+        <item>Dumbbell Front Raise</item>
+        <item>Dumbbell Lateral Raise</item>
+        <item>Dumbbell Row</item>
+        <item>Dumbbell Fly</item>
+        <item>Dumbbell Rear Delt Fly</item>
+    </string-array>
+
+    <string-array name="other">
+        <item>Dip</item>
+        <item>Weighted Dip</item>
+        <item>Pull-Up</item>
+        <item>Weighted Pull-Up</item>
+        <item>Push-Up</item>
+        <item>Weighted Push-Up</item>
+        <item>Plank</item>
+        <item>Weighted Plank</item>
+        <item>Side Plank</item>
+    </string-array>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.pbnjeff.wot;
 
+import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -11,9 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.SearchView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,6 +31,10 @@ public class TrackActivity extends AppCompatActivity {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     Spinner unitsDisplay;
+    
+    SearchManager searchManager;
+    SearchView searchView;
+    SimpleCursorAdapter exerciseSearchAdapter;
 
     List<Exercise> exerciseList;
 
@@ -47,23 +53,11 @@ public class TrackActivity extends AppCompatActivity {
 
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
-        // exercise adder button
-        Button addExercise = (Button) findViewById(R.id.exercise_list_add_name);
-        // final EditText newExercise = (EditText) findViewById(R.id.exercise_list_name_edit);
-
-        addExercise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addExerciseInputDialog();
-            }
-
-
-        });
-
         // register listview for context meu
         registerForContextMenu(expListView);
 
-
+        searchManager = (SearchManager) getSystemService(this.SEARCH_SERVICE);
+        searchView = (SearchView) findViewById(R.id.search_exercise);
 
         unitsDisplay = (Spinner) findViewById(R.id.track_spinner_units);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
@@ -85,37 +79,6 @@ public class TrackActivity extends AppCompatActivity {
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
-    }
-
-    protected void addExerciseInputDialog() {
-
-        LayoutInflater inflater = LayoutInflater.from(TrackActivity.this);
-        View promptView = inflater.inflate(R.layout.add_exercise_layout, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TrackActivity.this);
-        alertDialogBuilder.setView(promptView);
-
-        final EditText addExercise = (EditText) promptView.findViewById(R.id.add_exercise_input);
-
-        alertDialogBuilder.setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        String addExerciseString = addExercise.getText().toString();
-
-                        exerciseList.add(new Exercise(addExercise.getText().toString()));
-                        listDataHeader.add(addExerciseString);
-                        listDataChild.put(addExerciseString, new ArrayList<String>());
-                        listAdapter.notifyDataSetChanged();
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
     }
 
     @Override
