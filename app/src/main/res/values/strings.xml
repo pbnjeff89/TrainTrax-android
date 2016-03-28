@@ -41,7 +41,7 @@
         <item>kg</item>
     </string-array>
 
-    <string-array name="barbell_exercises">
+    <string-array name="exercises">
         <item>High Bar Squat</item>
         <item>Low Bar Squat</item>
         <item>Front Squat</item>
@@ -68,9 +68,6 @@
         <item>Decline Bench Press</item>
         <item>Pendlay Row</item>
         <item>Row</item>
-    </string-array>
-
-    <string-array name="dumbbell_exercises">
         <item>Dumbbell Bench Press</item>
         <item>Dumbbell Incline Bench Press</item>
         <item>Dumbbell Overhead Press</item>
@@ -80,9 +77,6 @@
         <item>Dumbbell Row</item>
         <item>Dumbbell Fly</item>
         <item>Dumbbell Rear Delt Fly</item>
-    </string-array>
-
-    <string-array name="other">
         <item>Dip</item>
         <item>Weighted Dip</item>
         <item>Pull-Up</item>
