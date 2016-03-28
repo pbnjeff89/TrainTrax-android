@@ -34,6 +34,7 @@
     <string name="save_workout">Save Workout</string>
     <string name="convert_units">Convert Units</string>
     <string name="search_hint">Search exercises</string>
+    <string name="ok">OK</string>
 
     <string-array name="units_array">
         <item>lbs</item>

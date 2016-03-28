@@ -1,7 +1,7 @@
 package com.pbnjeff.wot;
 
-import android.app.SearchManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.SearchView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,12 +30,12 @@ public class TrackActivity extends AppCompatActivity {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     Spinner unitsDisplay;
-    
-    SearchManager searchManager;
-    SearchView searchView;
-    SimpleCursorAdapter exerciseSearchAdapter;
+    Button btnAddExercise;
 
     List<Exercise> exerciseList;
+
+    static final int ADD_EXERCISE_REQUEST_CODE = 1;
+    String exerciseToAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +55,6 @@ public class TrackActivity extends AppCompatActivity {
         // register listview for context meu
         registerForContextMenu(expListView);
 
-        searchManager = (SearchManager) getSystemService(this.SEARCH_SERVICE);
-        searchView = (SearchView) findViewById(R.id.search_exercise);
 
         unitsDisplay = (Spinner) findViewById(R.id.track_spinner_units);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
@@ -77,8 +74,33 @@ public class TrackActivity extends AppCompatActivity {
             }
         });
 
+        // search exercises to add
+
+        btnAddExercise = (Button) findViewById(R.id.btn_add_exercise);
+        btnAddExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AddExerciseActivity.class);
+                startActivityForResult(intent, ADD_EXERCISE_REQUEST_CODE);
+            }
+        });
+
         // setting list adapter
         expListView.setAdapter(listAdapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+            if (data.getExtras().containsKey("addExercise")) {
+                exerciseToAdd = data.getStringExtra("addExercise");
+                exerciseList.add(new Exercise(exerciseToAdd));
+                listDataHeader.add(exerciseToAdd);
+                listDataChild.put(listDataHeader.get(listDataHeader.size() - 1), new ArrayList<String>());
+                listAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     @Override
